@@ -1,0 +1,20 @@
+/*
+	Bouncing Ball Main CSS
+*/
+
+html, body{
+
+	margin: 0px;
+
+	min-width: 100%;
+	min-height: 100%;
+
+	background-image: -moz-linear-gradient(top, #FFFFFF, #AAAAAA);
+	background-image: -webkit-gradient(linear, top, bottom, from(#FFFFFF), to(#AAAAAA));
+	background-image: -webkit-linear-gradient(top, #FFFFFF, #AAAAAA);
+	background-image: -o-linear-gradient(top, #FFFFFF, #AAAAAA);
+	background: -ms-linear-gradient(top,  #FFFFFF, #AAAAAA);
+	background-image: linear-gradient(to bottom, #FFFFFF, #AAAAAA);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#AAAAAA',GradientType=0 );
+
+}
