@@ -12,6 +12,12 @@
 		else if( element.attachEvent ) element.attachEvent( "on" + type, eventListener );
 	};
 
+	base.removeListener = function( element, type, eventListener ){
+		if( element.removeEventListener ) element.removeEventListener( type, eventListener, false );
+		else if( element.detachEvent ) element.detachEvent( "on" + type, eventListener );
+	};
+
+
 	base.onLoad = (function(){
 
 		var handlers = [];
@@ -19,7 +25,7 @@
 		// Conserving existing onload if any, is scoped out.
 		window.onload = function(e){
 			e = e||window.event;
-			for( var index in handlers ) handlers[index](e);
+			for( var index=0, length=handlers.length; index<length; index++ ) handlers[index](e);
 		};
 
 		return function( handler ){

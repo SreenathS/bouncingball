@@ -13,16 +13,19 @@
 		
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 		
-		<!-- Can be merged by a minifier -->
+		<!-- Can be merged on minification -->
 		<script src="js/base.js"></script>
 		<script src="js/environment.js"></script>
+		<script src="js/physics/PhysicsBase.js"></script>
+		<script src="js/physics/shapes/Circle.js"></script>
+		<script src="js/physics/controllers/DragController.js"></script>
 
 	</head>
 
 	<body>
 
-		<div id="bound" class="bound">
-			<div id="ball" class="ball"></div>
+		<div id="base" class="bound">
+			<div id="ball" phyclass="Circle" class="ball-img"></div>
 		</div>
 
 	</body>

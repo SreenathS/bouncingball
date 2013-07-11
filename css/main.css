@@ -28,6 +28,26 @@ html, body{
 }
 
 /* --- Ball --- */
+.ball-img{
+	left: -100;
+	top: -100;
+
+	margin-top: -61px;
+	margin-left: -61px;
+
+	position: absolute;
+	width: 132px;
+	height: 167px;
+	background: url(images/ball.png);
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: moz-none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 .ball {
 
 	top:50%;
