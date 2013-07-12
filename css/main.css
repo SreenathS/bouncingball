@@ -28,13 +28,19 @@ html, body{
 }
 
 /* --- Ball --- */
-.ball-img{
-	left: -100;
-	top: -100;
-
-	margin-top: -61px;
-	margin-left: -61px;
-
+.ball{
+	/* For hiding till looading */
+	left: -200px;
+	top: -200px;
+	
+	position:absolute;
+	width:122px;
+	height:122px;
+	margin-top:-60px;
+	margin-left:-60px;
+}
+.ball .ball-img{
+	pointer-events:none;
 	position: absolute;
 	width: 132px;
 	height: 167px;
@@ -48,7 +54,7 @@ html, body{
 	user-select: none;
 }
 
-.ball {
+.ball-css {
 
 	top:50%;
 	left:50%;
@@ -76,7 +82,7 @@ html, body{
 
 }
 /* Ball Glow */
-.ball::after {
+.ball-css::after {
 	position: absolute;
 	width: 72px;
 	height: 40px;
