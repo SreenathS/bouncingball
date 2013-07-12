@@ -44,7 +44,7 @@
 		}
 		else{
 			function onMouseDrag( event ){
-				if( event.which!=1 ) stopDrag(); // Yup only in browsers who supports which
+				if( event.which!=1 ) stopDrag(); // For instances when the mouse move out of the window
 				else{
 					_tmpPos.x = event.pageX-_dragStartPos.x+_shapeStartPos.x,
 					_tmpPos.y = event.pageY-_dragStartPos.y+_shapeStartPos.y;
