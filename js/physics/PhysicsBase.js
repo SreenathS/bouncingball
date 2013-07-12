@@ -48,39 +48,43 @@
 		return idHash;
 	}
 
-	function render( baseElement, children ){
-		// Render code
-	}
-
 	// The Class
 	var Phy = function( element ){
 
 		// --- Private variables ---
 		var _children = setupChildren( this, element );
 		var _childHash = getChildHash( _children );
-		var _timerId = null;
+		var _bounds = { width:element.offsetWidth, height:element.offsetHeight };
 
 		this.htmlElement = element;
 
 		// --- Private functions ---
-		function callRender(){
-			render( element, _children );
+		function render(){
+
+			_bounds.width = element.offsetWidth,
+			_bounds.height = element.offsetHeight;
+
+			var length = _children.length;
+			for( var index = 0; index<length; index++ ) _children[index].lazyMoveInBound( _bounds );
+
+			for (var i = 0; i<length; i++) {
+				var colliders = _children[i].lazyColliders;
+				for (var j = i + 1; j<length; j++) colliders[ _children[j].name ]( _children[j] );
+			}
+
+			for( var index=0; index<length; index++ ) _children[index].draw();
+
 		}
 
 		// --- Public functions ---
 		// Start if not running.
 		this.start = function(){
-			if( _timerId ) return false;
-			_timerId = setInterval( callRender,RENDER_INTERVAL );//Make use of requestAnimationFrame
-			return true;
+			_.enterFrame( render );
 		};
 
 		// Stop if running.
 		this.stop = function stop(){
-			if( !_timerId ) return false;
-			clearInterval(_timerId);
-			_timerId = null;
-			return true;
+			_.enterFrame(null);
 		};
 
 		this.getChildById = function(id){
