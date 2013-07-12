@@ -7,9 +7,44 @@
 
 	var base = function(id){ return document.getElementById(id); };
 
+	// --- Global constants ---
 	base.isIE = window.attachEvent!=null;
 	base.isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) || (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform)));
 
+	// --- Global constants ---
+	base.enterFrame = (function(){
+
+		var requestID;
+
+		var requestAnimationFrame = window.requestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			window.oRequestAnimationFrame ||
+			window.msRequestAnimationFrame ||
+			function(callback){
+				return window.setTimeout(callback, 1000 / 60);
+			};
+		var cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.clearInterval;
+
+		function stopLoop(){
+			cancelAnimationFrame(requestID);
+			requestID=null;
+		}
+
+		return function(callback){
+			if( callback ){
+				if( requestID ) stopLoop();
+				(function animLoop(){
+					requestID = requestAnimationFrame(animLoop);
+					callback();
+				})(); // I Love JS
+			}
+			else stopLoop();
+		};
+
+	})();
+
+	// --- Event listeners ---
 	base.addListener = function( element, type, eventListener ){
 		if( element.addEventListener ) element.addEventListener( type, eventListener, false );
 		else if( element.attachEvent ){
