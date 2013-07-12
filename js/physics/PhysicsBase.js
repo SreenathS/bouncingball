@@ -14,7 +14,7 @@
 	function setupChildren( base, baseElement ){
 
 		var children = [];
-		var childElements = baseElement.getElementsByTagName('*'); //W3C
+		var childElements = baseElement.children;
 
 		for( var index=0, length=childElements.length; index<length; index++ ){
 

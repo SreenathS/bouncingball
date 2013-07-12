@@ -21,10 +21,13 @@
 			return { x:parseInt(style.getPropertyValue('left')), y:parseInt(style.getPropertyValue('top')) };
 		};
 
-		this.setPos = function( pos ){
-			element.style.left = pos.x+"px", element.style.top = pos.y+"px";
+		this.setPos = _.isIE ? function( pos ){
+			element.style.left = pos.x,
+			element.style.top = pos.y;
+		} : function( pos ){
+			element.style.left = pos.x+"px",
+			element.style.top = pos.y+"px";
 		};
-
 
 		this.addController = function( ControllerClass ){
 			var controller = new ControllerClass( this );

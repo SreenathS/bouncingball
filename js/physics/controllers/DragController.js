@@ -17,50 +17,57 @@
 		this.name = DragController.NAME;
 
 		// --- Private functions ---
-		function onMouseDrag( event ){
-			if( event.which!=1 ) stopDrag(); // Yup only in browsers who supports which
-			else{
-				_tmpPos.x = event.pageX-_dragStartPos.x+_shapeStartPos.x,
-				_tmpPos.y = event.pageY-_dragStartPos.y+_shapeStartPos.y;
+		if( _.isMobile ){
+			function onTouchDrag( event ){
+				var touch = event.touches[0];
+				_tmpPos.x = touch.pageX-_dragStartPos.x+_shapeStartPos.x,
+				_tmpPos.y = touch.pageY-_dragStartPos.y+_shapeStartPos.y;
 
 				shape.setPos( _tmpPos );
 			}
+
+			function startTouchDrag( event ){
+				_shapeStartPos = shape.getPos();
+				var touch = event.touches[0];
+				_dragStartPos = { x: touch.pageX, y: touch.pageY };
+				_.addListener( shape.base.htmlElement, "touchmove", onTouchDrag );
+			}
+
+			function stopTouchDrag( event ){
+				_.removeListener( shape.base.htmlElement, "touchmove", onTouchDrag );
+				_dragStartPos = null;
+			}
+
+			_.addListener( shape.htmlElement, "touchstart", startTouchDrag );
+			_.addListener( shape.htmlElement, "touchend", stopTouchDrag );
+			_.addListener( shape.base.htmlElement, "touchend", stopTouchDrag );
 		}
+		else{
+			function onMouseDrag( event ){
+				if( event.which!=1 ) stopDrag(); // Yup only in browsers who supports which
+				else{
+					_tmpPos.x = event.pageX-_dragStartPos.x+_shapeStartPos.x,
+					_tmpPos.y = event.pageY-_dragStartPos.y+_shapeStartPos.y;
 
-		function startDrag( event ){
-			_shapeStartPos = shape.getPos();
-			_dragStartPos = { x: event.pageX, y: event.pageY };
-			_.addListener( shape.base.htmlElement, "mousemove", onMouseDrag );
+					shape.setPos( _tmpPos );
+				}
+			}
+
+			function startDrag( event ){
+				_shapeStartPos = shape.getPos();
+				_dragStartPos = { x: event.pageX, y: event.pageY };
+				_.addListener( shape.base.htmlElement, "mousemove", onMouseDrag );
+			}
+
+			function stopDrag( event ){
+				_.removeListener( shape.base.htmlElement, "mousemove", onMouseDrag );
+				_dragStartPos = null;
+			}
+
+			_.addListener( shape.htmlElement, "mousedown", startDrag );
+			_.addListener( shape.htmlElement, "mouseup", stopDrag );
+			_.addListener( shape.base.htmlElement, "mouseup", stopDrag );
 		}
-
-		function stopDrag( event ){
-			_.removeListener( shape.base.htmlElement, "mousemove", onMouseDrag );
-			_.removeListener( shape.base.htmlElement, "touchmove", onTouchDrag );
-			_dragStartPos = null;
-		}
-
-		_.addListener( shape.htmlElement, "mousedown", startDrag );
-		_.addListener( shape.htmlElement, "mouseup", stopDrag );
-		_.addListener( shape.base.htmlElement, "mouseup", stopDrag );
-
-		function onTouchDrag( event ){
-			var touch = event.touches[0];
-			_tmpPos.x = touch.pageX-_dragStartPos.x+_shapeStartPos.x,
-			_tmpPos.y = touch.pageY-_dragStartPos.y+_shapeStartPos.y;
-
-			shape.setPos( _tmpPos );
-		}
-
-		function touchDrag( event ){
-			_shapeStartPos = shape.getPos();
-			var touch = event.touches[0];
-			_dragStartPos = { x: touch.pageX, y: touch.pageY };
-			_.addListener( shape.base.htmlElement, "touchmove", onTouchDrag );
-		}
-
-		_.addListener( shape.htmlElement, "touchstart", touchDrag );
-		_.addListener( shape.htmlElement, "touchend", stopDrag );
-		_.addListener( shape.base.htmlElement, "touchend", stopDrag );
 
 		// Destroys this instance
 		this.dispose = function(){
