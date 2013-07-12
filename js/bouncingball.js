@@ -12,4 +12,6 @@ _.onLoad(function(){
 
 	ball.setPos({x:phy.htmlElement.offsetWidth/2, y:phy.htmlElement.offsetHeight/2});
 
+	phy.start();
+
 });
