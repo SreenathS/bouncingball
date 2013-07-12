@@ -105,10 +105,10 @@
 		};
 
 		// Moves the shape based on velocity and do a bound check & rebound if required.
-		this.lazyMoveInBound = function( bound ){
+		this.lazyMoveInBound = function( bound, timeFactor ){
 
-			thisC.lazyPosX = _pos.x + thisC.vX,
-			thisC.lazyPosY = _pos.y + thisC.vY;
+			thisC.lazyPosX = _pos.x + thisC.vX * timeFactor,
+			thisC.lazyPosY = _pos.y + thisC.vY * timeFactor;
 
 			if (thisC.lazyPosX < _radius) thisC.lazyPosX = _radius, thisC.vX *= -1;
 			else if (thisC.lazyPosX > bound.width-_radius) thisC.lazyPosX = bound.width-_radius, thisC.vX *= -1;

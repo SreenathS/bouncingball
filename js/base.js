@@ -31,13 +31,18 @@
 			requestID=null;
 		}
 
+		var lastTime = new Date().getTime();
+
 		return function(callback){
 			if( callback ){
 				if( requestID ) stopLoop();
 				(function animLoop(){
 					requestID = requestAnimationFrame(animLoop);
-					callback();
-				})(); // I Love JS
+					var time = new Date().getTime();
+//					if(Math.random()<0.05) _("console").innerHTML = Math.round(1000/(time-lastTime));
+					callback( (time-lastTime)/10 );
+					lastTime = time;
+				})();
 			}
 			else stopLoop();
 		};

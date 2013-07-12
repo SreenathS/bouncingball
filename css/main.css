@@ -39,6 +39,10 @@ html, body{
 	height:122px;
 	margin-top:-60px;
 	margin-left:-60px;
+
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+
 }
 .ball .ball-img{
 	pointer-events:none;

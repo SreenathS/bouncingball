@@ -59,13 +59,13 @@
 		this.htmlElement = element;
 
 		// --- Private functions ---
-		function render(){
+		function render( timeFactor ){
 
 			_bounds.width = element.offsetWidth,
 			_bounds.height = element.offsetHeight;
 
 			var length = _children.length;
-			for( var index = 0; index<length; index++ ) _children[index].lazyMoveInBound( _bounds );
+			for( var index = 0; index<length; index++ ) _children[index].lazyMoveInBound( _bounds, timeFactor );
 
 			for (var i = 0; i<length; i++) {
 				var colliders = _children[i].lazyColliders;
