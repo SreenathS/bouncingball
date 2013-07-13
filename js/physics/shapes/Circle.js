@@ -7,7 +7,7 @@
 (function(){
 
 	// -- static constants ---
-	var MAX_INTERTIAL_TIME = 100; // Time for becoming stationary
+	var MAX_INTERTIAL_TIME = 80; // Time for becoming stationary
 
 	// Not the best place
 	function getPosition( element ){
@@ -97,6 +97,8 @@
 
 			if (hyp < (thatC.radius + _radius)) {
 
+				_.beep();
+
 				nX = dX / hyp, nY = dY / hyp; // Collision normal
 
 				centerX = (thisC.lazyPosX + thatC.lazyPosX) * .5; // Point of gravity of collision
@@ -135,11 +137,11 @@
 				thisC.lazyPosY = _pos.y + thisC.vY * timeFactor;
 			}
 
-			if (thisC.lazyPosX < _radius) thisC.lazyPosX = _radius, thisC.vX *= -1;
-			else if (thisC.lazyPosX > bound.width-_radius) thisC.lazyPosX = bound.width-_radius, thisC.vX *= -1;
+			if (thisC.lazyPosX < _radius) thisC.lazyPosX = _radius, thisC.vX *= -1, _.beep();
+			else if (thisC.lazyPosX > bound.width-_radius) thisC.lazyPosX = bound.width-_radius, thisC.vX *= -1, _.beep();
 
-			if (thisC.lazyPosY < _radius) thisC.lazyPosY = _radius, thisC.vY *= -1;
-			else if (thisC.lazyPosY > bound.height-_radius) thisC.lazyPosY = bound.height-_radius, thisC.vY *= -1;
+			if (thisC.lazyPosY < _radius) thisC.lazyPosY = _radius, thisC.vY *= -1, _.beep();
+			else if (thisC.lazyPosY > bound.height-_radius) thisC.lazyPosY = bound.height-_radius, thisC.vY *= -1, _.beep();
 
 		};
 

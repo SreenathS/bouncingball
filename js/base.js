@@ -82,6 +82,34 @@
 		}
 	};
 
+	base.beep = (function(){
+
+		var AudioContext = window.audioContext || window.webkitAudioContext;
+
+		if( AudioContext ){
+			var context = new AudioContext();
+			return function(){
+
+				var oscillator = context.createOscillator();
+				var vol = context.createGainNode();
+
+				vol.gain.value = 0.02;
+				oscillator.connect(vol);
+				vol.connect(context.destination);
+				oscillator.start(0);
+
+				setTimeout(function(){
+					oscillator.stop(0);
+					oscillator = null, vol = null;
+				}, 30);
+
+			}
+		}
+
+		return function(){};
+
+	})();
+
 	base.onLoad = function( listener ){
 		function onLoadClosure(event){
 			listener(event);
