@@ -7,6 +7,9 @@
 
 	var base = function(id){ return document.getElementById(id); };
 
+	var stats = document.createElement("div");
+	stats.className += "stats";
+
 	// --- Global constants ---
 	base.isIE = window.attachEvent!=null;
 	base.isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) || (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform)));
@@ -31,7 +34,7 @@
 			requestID=null;
 		}
 
-		var lastTime = new Date().getTime();
+		var prevTime = new Date().getTime();
 
 		return function(callback){
 			if( callback ){
@@ -39,9 +42,10 @@
 				(function animLoop(){
 					requestID = requestAnimationFrame(animLoop);
 					var time = new Date().getTime();
-//					if(Math.random()<0.05) _("console").innerHTML = Math.round(1000/(time-lastTime));
-					callback( (time-lastTime)/10 );
-					lastTime = time;
+//					if(Math.random()<0.05) stats.innerHTML = "FPS : "+Math.round( 1000/(new Date().getTime()-prevTime) );
+					callback( time-prevTime );
+//					if(Math.random()<0.05) stats.innerHTML = "Callback delay : "+( new Date().getTime()-time );
+					prevTime = time;
 				})();
 			}
 			else stopLoop();
@@ -86,6 +90,10 @@
 		}
 		base.addListener( window, "load", onLoadClosure);
 	};
+
+	base.onLoad(function(){
+		document.body.appendChild( stats );
+	});
 
 	window._ = base;
 

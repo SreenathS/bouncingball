@@ -105,3 +105,9 @@ html, body{
 
 	content: "";
 }
+
+/* Console */
+.stats{
+	position: absolute;
+	pointer-events:none;
+}
