@@ -106,8 +106,33 @@ html, body{
 	content: "";
 }
 
-/* Console */
+/* Stats */
 .stats{
 	position: absolute;
 	pointer-events:none;
+}
+
+/* Controls */
+.controls{
+	position: absolute;
+	right: 50px;
+
+	font-family: helvetica;
+	font-size: 13px;
+	padding: 5px;
+
+	color: #555555;
+	filter: alpha(opacity=50);
+	opacity: 0.5;
+}
+.controls:hover{
+	filter: alpha(opacity=100);
+	opacity: 1;
+}
+
+.controls span{
+	position: absolute;
+}
+.controls input{
+	width: 200px;
 }

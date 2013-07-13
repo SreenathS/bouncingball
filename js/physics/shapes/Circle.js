@@ -2,6 +2,7 @@
 	Project : bouncing-ball
 	Circle : Physical 2D representation of the ball.
 	Dependency : PhysicsBase.js
+	Note : Ideally, most of these functionalities must be in a super class named 'Shape/Object'. Scoping out for the time being.
 */
 
 (function(){
@@ -27,7 +28,6 @@
 
 	}
 
-	// Ideally, most of these functionalities must be in a super class named 'Shape'. Scoping out for the time being.
 	var Circle = function( element, base, radious ){
 
 		// --- Private variables ---
@@ -87,6 +87,7 @@
 			var nX, nY;
 			var centerX, centerY;
 			var vector;
+			var tmp;
 		// --- Variable Pool for colliders ---
 
 		// --- For circle to circle collision ---
@@ -96,8 +97,6 @@
 			hyp = Math.sqrt(dX * dX + dY * dY); // Distance between the center positions of circles
 
 			if (hyp < (thatC.radius + _radius)) {
-
-				_.beep();
 
 				nX = dX / hyp, nY = dY / hyp; // Collision normal
 
@@ -125,7 +124,7 @@
 				dY = (_hookedPos.y - _pos.y )/timeFactor;
 
 				if( dX || dY || _inertialTime>MAX_INTERTIAL_TIME ){
-					thisC.vX = dX, thisC.vY = dY;	
+					thisC.vX = dX, thisC.vY = dY;
 					_inertialTime = 0;
 				}
 				else _inertialTime += timeFactor;
@@ -133,15 +132,21 @@
 				thisC.lazyPosX = _hookedPos.x, thisC.lazyPosY = _hookedPos.y;
 			}
 			else{
+				thisC.vX += base.acceleration.x;//*timeFactor, //Yup, time must be used, but not critical, thought il reduce two opeartions.
+				thisC.vY += base.acceleration.y;//*timeFactor;
+
+				thisC.vX *= base.friction,
+				thisC.vY *= base.friction;
+
 				thisC.lazyPosX = _pos.x + thisC.vX * timeFactor,
 				thisC.lazyPosY = _pos.y + thisC.vY * timeFactor;
 			}
 
-			if (thisC.lazyPosX < _radius) thisC.lazyPosX = _radius, thisC.vX *= -1, _.beep();
-			else if (thisC.lazyPosX > bound.width-_radius) thisC.lazyPosX = bound.width-_radius, thisC.vX *= -1, _.beep();
+			if (thisC.lazyPosX < _radius) thisC.lazyPosX = _radius, thisC.vX *= -1;
+			else if (thisC.lazyPosX > bound.width-_radius) thisC.lazyPosX = bound.width-_radius, thisC.vX *= -1;
 
-			if (thisC.lazyPosY < _radius) thisC.lazyPosY = _radius, thisC.vY *= -1, _.beep();
-			else if (thisC.lazyPosY > bound.height-_radius) thisC.lazyPosY = bound.height-_radius, thisC.vY *= -1, _.beep();
+			if (thisC.lazyPosY < _radius) thisC.lazyPosY = _radius, thisC.vY *= -1;
+			else if (thisC.lazyPosY > bound.height-_radius) thisC.lazyPosY = bound.height-_radius, thisC.vY *= -1;
 
 		};
 

@@ -31,6 +31,10 @@
 
 	}
 
+	function preventDef(event){
+		event.preventDefault();
+	}
+
 	function getChildHash( children ){
 		var idHash = {};
 		var id, child;
@@ -56,7 +60,13 @@
 		var _childHash = getChildHash( _children );
 		var _bounds = { width:element.offsetWidth, height:element.offsetHeight };
 
+		// --- Init action ---
+		_.addListener( element, 'touchmove', preventDef );
+
+		// --- Public functions ---
 		this.htmlElement = element;
+		this.acceleration = { x:0, y:0 };
+		this.friction = 1;
 
 		// --- Private functions ---
 		function render( timeFactor ){
