@@ -6,6 +6,9 @@
 
 (function(){
 
+	// -- static constants ---
+	var MAX_INTERTIAL_TIME = 100; // Time for becoming stationary
+
 	// Not the best place
 	function getPosition( element ){
 
@@ -30,6 +33,8 @@
 		// --- Private variables ---
 		var _controllers = {};
 		var _pos = getPosition( element );
+		var _hookedPos, _prevHookedPos;
+		var _inertialTime=0;
 		var _radius = radious || parseInt(element.getAttribute("phyradious")) || element.offsetWidth/2;
 		var thisC = this;
 
@@ -39,12 +44,43 @@
 		this.base = base;
 		
 		this.lazyPosX = 0, this.lazyPosY = 0;
-		this.vX = 2, this.vY = 3;
+		this.vX=0, this.vY=0;
 		this.radius = _radius;
 
 		this.lazyColliders = {}; // A collection of all colliders
+
+		// --- Private functions ---
+		var render = _.isIE ? function(){
+			element.style.left = _pos.x,
+			element.style.top = _pos.y;
+		} : function(){
+			element.style.left = _pos.x+"px",
+			element.style.top = _pos.y+"px";
+		};
 		
 		// --- Public functions ---
+		this.getPos = function(){ return {x:_pos.x, y:_pos.y}; }; // Cloning position, Hence!
+
+		this.setPos = function(pos){
+			_pos = pos;
+			render();
+		};
+
+		this.setHookedPos = function( pos ){
+			_hookedPos = pos			
+		};
+
+		this.addController = function( ControllerClass ){
+			var controller = new ControllerClass( thisC );
+			_controllers[ controller.name ] = controller;
+		};
+
+		this.draw = function(){
+			if( _pos.x!=thisC.lazyPosX || _pos.y!=thisC.lazyPosY ){
+				_pos.x = thisC.lazyPosX, _pos.y = thisC.lazyPosY;
+				render();
+			}
+		};
 
 		// --- Variable Pool for colliders ---
 			var dX, dY, hyp;
@@ -80,35 +116,24 @@
 
 		};
 
-		this.getPos = function(){ return {x:_pos.x, y:_pos.y}; }; // Cloning pos, Hence!
-
-		this.setPos = _.isIE ? function( pos ){
-			_pos = pos;
-			element.style.left = pos.x,
-			element.style.top = pos.y;
-		} : function( pos ){
-			_pos = pos;
-			element.style.left = pos.x+"px",
-			element.style.top = pos.y+"px";
-		};
-
-		this.addController = function( ControllerClass ){
-			var controller = new ControllerClass( thisC );
-			_controllers[ controller.name ] = controller;
-		};
-
-		this.draw = function(){
-			thisC.setPos({
-				x: thisC.lazyPosX,
-				y: thisC.lazyPosY
-			});
-		};
-
-		// Moves the shape based on velocity and do a bound check & rebound if required.
+		// Moves the shape based on velocity, do a bound check & rebound if required.
 		this.lazyMoveInBound = function( bound, timeFactor ){
+			if( _hookedPos ){
+				dX = (_hookedPos.x - _pos.x )/timeFactor,
+				dY = (_hookedPos.y - _pos.y )/timeFactor;
 
-			thisC.lazyPosX = _pos.x + thisC.vX * timeFactor,
-			thisC.lazyPosY = _pos.y + thisC.vY * timeFactor;
+				if( dX || dY || _inertialTime>MAX_INTERTIAL_TIME ){
+					thisC.vX = dX, thisC.vY = dY;	
+					_inertialTime = 0;
+				}
+				else _inertialTime += timeFactor;
+
+				thisC.lazyPosX = _hookedPos.x, thisC.lazyPosY = _hookedPos.y;
+			}
+			else{
+				thisC.lazyPosX = _pos.x + thisC.vX * timeFactor,
+				thisC.lazyPosY = _pos.y + thisC.vY * timeFactor;
+			}
 
 			if (thisC.lazyPosX < _radius) thisC.lazyPosX = _radius, thisC.vX *= -1;
 			else if (thisC.lazyPosX > bound.width-_radius) thisC.lazyPosX = bound.width-_radius, thisC.vX *= -1;

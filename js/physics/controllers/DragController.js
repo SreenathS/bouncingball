@@ -23,7 +23,7 @@
 				_tmpPos.x = touch.pageX-_dragStartPos.x+_shapeStartPos.x,
 				_tmpPos.y = touch.pageY-_dragStartPos.y+_shapeStartPos.y;
 
-				shape.setPos( _tmpPos );
+				shape.setHookedPos( _tmpPos );
 			}
 
 			function startTouchDrag( event ){
@@ -31,11 +31,13 @@
 				var touch = event.touches[0];
 				_dragStartPos = { x: touch.pageX, y: touch.pageY };
 				_.addListener( shape.base.htmlElement, "touchmove", onTouchDrag );
+				shape.setHookedPos( _shapeStartPos );
 			}
 
 			function stopTouchDrag( event ){
 				_.removeListener( shape.base.htmlElement, "touchmove", onTouchDrag );
 				_dragStartPos = null;
+				shape.setHookedPos(null);
 			}
 
 			_.addListener( shape.htmlElement, "touchstart", startTouchDrag );
@@ -49,7 +51,7 @@
 					_tmpPos.x = event.pageX-_dragStartPos.x+_shapeStartPos.x,
 					_tmpPos.y = event.pageY-_dragStartPos.y+_shapeStartPos.y;
 
-					shape.setPos( _tmpPos );
+					shape.setHookedPos( _tmpPos );
 				}
 			}
 
@@ -57,11 +59,13 @@
 				_shapeStartPos = shape.getPos();
 				_dragStartPos = { x: event.pageX, y: event.pageY };
 				_.addListener( shape.base.htmlElement, "mousemove", onMouseDrag );
+				shape.setHookedPos( _shapeStartPos );
 			}
 
 			function stopDrag( event ){
 				_.removeListener( shape.base.htmlElement, "mousemove", onMouseDrag );
 				_dragStartPos = null;
+				shape.setHookedPos(null);
 			}
 
 			_.addListener( shape.htmlElement, "mousedown", startDrag );
