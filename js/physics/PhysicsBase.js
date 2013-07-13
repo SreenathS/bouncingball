@@ -78,8 +78,10 @@
 			for( var index = 0; index<length; index++ ) _children[index].lazyMoveInBound( _bounds, timeFactor );
 
 			for (var i = 0; i<length; i++) {
-				var colliders = _children[i].lazyColliders;
-				for (var j = i + 1; j<length; j++) colliders[ _children[j].name ]( _children[j] );
+				if( _children[i].visible ){
+					var colliders = _children[i].lazyColliders;
+					for (var j = i + 1; j<length; j++) if( _children[j].visible ) colliders[ _children[j].name ]( _children[j] );
+				}
 			}
 
 			for( var index=0; index<length; index++ ) _children[index].draw();

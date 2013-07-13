@@ -28,14 +28,14 @@
 
 	}
 
-	var Circle = function( element, base, radious ){
+	var Circle = function( element, base, radius ){
 
 		// --- Private variables ---
 		var _controllers = {};
 		var _pos = getPosition( element );
 		var _hookedPos, _prevHookedPos;
 		var _inertialTime=0;
-		var _radius = radious || parseInt(element.getAttribute("phyradious")) || element.offsetWidth/2;
+		var _radius = radius || parseInt(element.getAttribute("phyradius")) || element.offsetWidth/2;
 		var thisC = this;
 
 		// --- Public variables ---
@@ -46,6 +46,7 @@
 		this.lazyPosX = 0, this.lazyPosY = 0;
 		this.vX=0, this.vY=0;
 		this.radius = _radius;
+		this.visible = true;
 
 		this.lazyColliders = {}; // A collection of all colliders
 
@@ -59,10 +60,15 @@
 		};
 		
 		// --- Public functions ---
+		this.setVisibility = function( val ){
+			thisC.visible = val;
+			element.style.display = val ? "block": "none";
+		};
+
 		this.getPos = function(){ return {x:_pos.x, y:_pos.y}; }; // Cloning position, Hence!
 
 		this.setPos = function(pos){
-			_pos = pos;
+			_pos.x = pos.x, _pos.y = pos.y;
 			render();
 		};
 

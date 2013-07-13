@@ -12,6 +12,10 @@ _.onLoad(function(){
 	ball.addController( Phy.controllers.DragController );
 	ball.setPos({x:phy.htmlElement.offsetWidth/2, y:phy.htmlElement.offsetHeight/2});
 
+	var rotor = phy.getChildById("rotor");
+	rotor.addController( Phy.controllers.CursorController );
+	rotor.setVisibility( false );
+
 	var gravitySlider = _("gravitySlider");
 	var frictionSlider = _("frictionSlider");
 

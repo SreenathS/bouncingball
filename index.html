@@ -18,17 +18,18 @@
 		<script src="js/physics/PhysicsBase.js"></script>
 		<script src="js/physics/shapes/Circle.js"></script>
 		<script src="js/physics/controllers/DragController.js"></script>
+		<script src="js/physics/controllers/CursorController.js"></script>
 
 	</head>
 
 	<body>
 		<div id="base" class="bound">
-			<div id="ball" phyclass="Circle" class="ball">
-				<div class="ball-img"></div>
+			<div id="ball" phyclass="Circle" class="purple-ball">
+				<div></div>
 			</div>
-<!--			<div id="ball1" phyclass="Circle" class="ball" style="left:100px;top:100Px;">
-				<div class="ball-img"></div>
--->			</div>
+			<div id="rotor" phyclass="Circle" phyradius="60" class="rotor">
+				<div></div>
+			</div>
 		</div>
 
 		<div class=controls>

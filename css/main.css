@@ -29,7 +29,7 @@ html, body{
 }
 
 /* --- Ball --- */
-.ball{
+.purple-ball{
 	/* For hiding till looading */
 	left: -200px;
 	top: -200px;
@@ -40,16 +40,35 @@ html, body{
 	margin-top:-60px;
 	margin-left:-60px;
 
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: moz-none;
+	-ms-user-select: none;
+	user-select: none;
+
 	transform: translateZ(0);
 	-webkit-transform: translateZ(0);
 
 }
-.ball .ball-img{
+.purple-ball > div:first-child{
 	pointer-events:none;
 	position: absolute;
 	width: 132px;
 	height: 167px;
 	background: url(images/ball.png);
+}
+
+/* -- Rotor --- */
+.rotor{
+	pointer-events:none;
+	display: none;
+
+	position:absolute;
+	width:122px;
+	height:122px;
+	margin-top:-61px;
+	margin-left:-61px;
 
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -57,8 +76,30 @@ html, body{
 	-moz-user-select: moz-none;
 	-ms-user-select: none;
 	user-select: none;
+
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+
+}
+.rotor > div:first-child{
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+
+	-webkit-animation: rotate 3s linear infinite;
+    border: 5px dotted grey;
+ }
+ @-webkit-keyframes rotate {
+    from{
+        -webkit-transform: rotate(0deg);
+    }
+    to{
+        -webkit-transform: rotate(180deg);
+    }
 }
 
+
+/*
 .ball-css {
 
 	top:50%;
@@ -86,7 +127,6 @@ html, body{
 		0 0 2px rgba(0,0,0,.4);
 
 }
-/* Ball Glow */
 .ball-css::after {
 	position: absolute;
 	width: 72px;
@@ -105,6 +145,7 @@ html, body{
 
 	content: "";
 }
+*/
 
 /* Stats */
 .stats{
