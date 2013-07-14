@@ -59,6 +59,7 @@
 		var _children = setupChildren( this, element );
 		var _childHash = getChildHash( _children );
 		var _bounds = { width:element.offsetWidth, height:element.offsetHeight };
+		var thisObj = this;
 
 		// --- Init action ---
 		if( _.isMobile ){
@@ -97,7 +98,7 @@
 		};
 
 		// Stop if running.
-		this.stop = function stop(){
+		this.stop = function(){
 			_.enterFrame(null);
 		};
 
@@ -107,8 +108,11 @@
 
 		// Destroys this instance
 		this.dispose = function(){
-			stop();
+			thisObj.stop();
 			// Loop through and destroy the children, and destroy public functions
+			thisObj.htmlElement =
+			thisObj.acceleration =
+			thisObj.friction =
 			element =
 			_children =
 			_childHash =

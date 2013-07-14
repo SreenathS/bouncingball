@@ -4,7 +4,7 @@
 */
 
 //--- base.js --------------------------------------------------------------------
-module ("Testing base.js");
+module ("base.js");
 test( "Check for initialization", function() {
 	
 	ok( _, "Base was created" );
@@ -19,7 +19,7 @@ test( "Check for initialization", function() {
 });
 
 test( "Functionality check", function() {
-	
+
 	// Check _ functionality
 	equal( _("qunit"), document.getElementById("qunit"), "GetElementById short hand is working" );
 
@@ -79,20 +79,3 @@ asyncTest( "Testing animation loop", function() {
 	},500);
 
 });
-
-//--- helpers --------------------------------------------------------------------
-
-function getTestElement(){
-	return document.createElement("div");
-}
-
-function getMouseEvent( type, target ){
-
-	type = type || "mousedown";
-	
-	var mousedownEvent = document.createEvent("MouseEvent");
-	mousedownEvent.initMouseEvent(type, true, true, window, 0, 10, 10, 10, 10, false, false, false, false, 0, target||null);
-	return mousedownEvent;
-}
-
-//--------------------------------------------------------------------------------
