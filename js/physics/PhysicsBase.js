@@ -44,7 +44,7 @@
 			id = child.getAttribute("id");
 			if( !id ){
 				id = (NAME_PREFIX+index);
-				child.setAttribute(id);
+				child.setAttribute("id",id);
 			}
 			idHash[id] = children[index];
 		}

@@ -30,7 +30,8 @@ html, body{
 
 /* --- Ball --- */
 .purple-ball{
-	left: -200px; /* For cross-browser hiding till loading */
+	/* Cross-browser hiding till all are loaded, better solution is there but scoped out. */
+	left: -200px;
 	top: -200px;
 	
 	position:absolute;
@@ -63,7 +64,8 @@ html, body{
 
 /* -- Rotor --- */
 .rotor{
-	left: -200px; /* For cross-browser hiding till loading */
+	/* Cross-browser hiding till all are loaded, better solution is there but scoped out. */
+	left: -200px;
 	top: -200px;
 
 	pointer-events:none;
