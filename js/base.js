@@ -27,7 +27,11 @@
 			function(callback){
 				return window.setTimeout(callback, 1000 / 60);
 			};
-		var cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.clearInterval;
+		var cancelAnimationFrame = window.cancelAnimationFrame ||
+			window.webkitCancelAnimationFrame ||
+			window.webkitCancelRequestAnimationFrame ||
+			window.mozCancelAnimationFrame ||
+			window.clearTimeout;
 
 		function stopLoop(){
 			cancelAnimationFrame(requestID);
