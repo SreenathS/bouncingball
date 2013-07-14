@@ -79,6 +79,7 @@
 		this.addController = function( ControllerClass ){
 			var controller = new ControllerClass( thisC );
 			_controllers[ controller.name ] = controller;
+			return controller;
 		};
 
 		this.draw = function(){
