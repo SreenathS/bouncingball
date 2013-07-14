@@ -21,12 +21,11 @@ _.onLoad(function(){
 
 	function getVal( element ){
 		var val = parseFloat( element.value );
-		return val==NaN ? 0 : val;
+		return val ? val : 0;
 	}
 
 	_.addListener( gravitySlider, "change", function(){
 		phy.acceleration.y = getVal(gravitySlider);
-		console.log(gravitySlider.value);
 	});
 	_.addListener( frictionSlider, "change", function(){
 		phy.friction = 1-getVal(frictionSlider)*.2;

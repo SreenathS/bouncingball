@@ -25,10 +25,10 @@
 	<body>
 		<div id="base" class="bound">
 			<div id="ball" phyclass="Circle" class="purple-ball">
-				<div></div>
+				<div class="purple-ball-div"></div>
 			</div>
 			<div id="rotor" phyclass="Circle" phyradius="60" class="rotor">
-				<div></div>
+				<div class="rotor-div"></div>
 			</div>
 		</div>
 
@@ -36,6 +36,8 @@
 			<input id="gravitySlider" type="range" step="0.01" min="0" max="1" value="0" /><span>&nbsp;Gravity</span></br>
 			<input id="frictionSlider" type="range" step="0.01" min="0" max="1" value="0" /><span>&nbsp;Friction</span>
 		</div>
+
+		<div class="message">Feel free to drag around the ball, or click on the white area to get an interactive cursor.</div>
 
 		<script src="js/bouncingball.js"></script>
 

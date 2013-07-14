@@ -61,7 +61,9 @@
 		var _bounds = { width:element.offsetWidth, height:element.offsetHeight };
 
 		// --- Init action ---
-		_.addListener( element, 'touchmove', preventDef );
+		if( _.isMobile ){
+			_.addListener( element, 'touchmove', preventDef );
+		}
 
 		// --- Public functions ---
 		this.htmlElement = element;

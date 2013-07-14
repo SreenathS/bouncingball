@@ -24,7 +24,7 @@
 			top = element.currentStyle.top;
 		}
 
-		return { x:parseInt(left), y:parseInt(top) };
+		return { x:parseInt(left)||0, y:parseInt(top)||0 };
 
 	}
 
@@ -46,7 +46,7 @@
 		this.lazyPosX = 0, this.lazyPosY = 0;
 		this.vX=0, this.vY=0;
 		this.radius = _radius;
-		this.visible = true;
+		this.visible = element.style.display!="none";
 
 		this.lazyColliders = {}; // A collection of all colliders
 
@@ -68,7 +68,7 @@
 		this.getPos = function(){ return {x:_pos.x, y:_pos.y}; }; // Cloning position, Hence!
 
 		this.setPos = function(pos){
-			_pos.x = pos.x, _pos.y = pos.y;
+			if( pos.x!=NaN && pos.y!=NaN ) _pos.x = pos.x, _pos.y = pos.y; // Murphy seal
 			render();
 		};
 
@@ -83,8 +83,10 @@
 
 		this.draw = function(){
 			if( _pos.x!=thisC.lazyPosX || _pos.y!=thisC.lazyPosY ){
-				_pos.x = thisC.lazyPosX, _pos.y = thisC.lazyPosY;
-				render();
+				if( thisC.lazyPosX!=NaN && thisC.lazyPosY!=NaN ){// Murphy seal
+					 _pos.x = thisC.lazyPosX, _pos.y = thisC.lazyPosY;
+					render();
+				}
 			}
 		};
 
