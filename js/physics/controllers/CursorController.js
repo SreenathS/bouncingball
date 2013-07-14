@@ -78,6 +78,8 @@
 		// Destroys this instance
 		this.dispose = function(){
 			stopDrag();
+			_.removeListener( shape.base.htmlElement, "mousedown", startDrag );
+			_.removeListener( shape.base.htmlElement, "mouseup", stopDrag );
 			shape =
 			_dragPos = null;
 		};
